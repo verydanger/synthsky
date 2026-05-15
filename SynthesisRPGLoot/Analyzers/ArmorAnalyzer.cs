@@ -10,7 +10,7 @@ using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Strings;
 using Mutagen.Bethesda.Synthesis;
-using Mutagen.Bethesda.Oblivion;
+//using Mutagen.Bethesda.Oblivion;
 
 namespace SynthesisRPGLoot.Analyzers
 {
