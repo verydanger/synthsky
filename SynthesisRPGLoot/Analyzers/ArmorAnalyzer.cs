@@ -122,11 +122,17 @@ namespace SynthesisRPGLoot.Analyzers
             .ToArray();
             foreach (var enchantment in OrderedEnchantments)
             {
-                Console.WriteLine(enchantment.Level + " " + enchantment.Enchantment.Name + " " + enchantment.Enchantment.EnchantmentAmount);
-                foreach (var effect in enchantment.Enchantment.Effects)
+                string str = enchantment.Enchantment.Name.ToString() + " " + enchantment.Enchantment.Effects.First().Data.Magnitude;
+                if (enchantment.Enchantment.Effects.Count > 1)
                 {
-                    Console.WriteLine("     " + effect.Data.Magnitude);
+                    str += " (" + enchantment.Enchantment.Effects[1].Data.Magnitude + ")";
                 }
+                Console.WriteLine(str);
+                //Console.WriteLine(enchantment.Level + " " + enchantment.Enchantment.Name + " " + enchantment.Enchantment.EnchantmentAmount);
+                // foreach (var effect in enchantment.Enchantment.Effects)
+                // {
+                //     Console.WriteLine("     " + effect.Data.Magnitude);
+                // }
             }
 
             AllLevels = AllEnchantments.Select(e => e.Level).Distinct().ToHashSet();
