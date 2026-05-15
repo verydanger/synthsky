@@ -114,9 +114,9 @@ namespace SynthesisRPGLoot.Analyzers
 
             // FISH ADDED
             var OrderedEnchantments = AllEnchantments
-            .OrderBy(x => x.Enchantment.Name)     // Primary: Enchantment name ascending
-            .ThenBy(x => x.Level)                 // Secondary: Level ascending
-            .ToArray();                           // or .ToList() if you prefer a List
+            .OrderBy(x => x.Enchantment?.Name.ToString() ?? string.Empty)
+            .ThenBy(x => x.Level)
+            .ToArray();
             foreach (var enchantment in OrderedEnchantments)
             {
                 Console.WriteLine(enchantment.Level + " " + enchantment.Enchantment.Name + " " + enchantment.Amount + " " + enchantment.Enchantment.EnchantmentAmount);
