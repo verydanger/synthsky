@@ -399,8 +399,8 @@ namespace SynthesisRPGLoot.Analyzers
             {
                 
                 var ench = pool[i];
-                if (ench.Enchantment.Name.ToString() == "Fortify Destruction") 
-                    Console.WriteLine(ench.Enchantment.Name + " " + ench.Level + " " + ench.Enchantment.EnchantmentAmount);
+                // if (ench.Enchantment.Name.ToString() == "Fortify Destruction") 
+                //     Console.WriteLine(ench.Enchantment.Name + " " + ench.Level + " " + ench.Enchantment.EnchantmentAmount);
                 
                 double weight = 1.0;
 
