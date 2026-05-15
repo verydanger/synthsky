@@ -389,8 +389,8 @@ namespace SynthesisRPGLoot.Analyzers
             int referenceLevel, 
             float penaltyFactor)
         {
-            if (pool.Length == 0)
-                return default!;
+            if (pool.Length == 0) 
+                return pool[0];
 
             var weights = new double[pool.Length];
             double totalWeight = 0.0;
@@ -404,20 +404,27 @@ namespace SynthesisRPGLoot.Analyzers
 
                 if (levelDiff > 0)
                 {
-                    // Strong exponential penalty for higher level enchantments
-                    weight *= Math.Pow(0.35, levelDiff * penaltyFactor);
+                    weight *= Math.Pow(0.20, levelDiff * penaltyFactor);   // Strong curve
                 }
-                else if (levelDiff < -5)
+                else if (levelDiff < -6)
                 {
-                    weight *= 1.15; // slight bonus for much lower enchantments
+                    weight *= 1.22;
                 }
 
-                weights[i] = weight;
-                totalWeight += weight;
-            }
+                // Very strong protection for early game
+                if (referenceLevel <= 10)
+                {
+                    if (ench.Level >= 30) weight *= 0.04;
+                    else if (ench.Level >= 20) weight *= 0.15;
+                }
+                else if (referenceLevel <= 15 && ench.Level >= 40)
+                {
+                    weight *= 0.10;
+                }
 
-            if (totalWeight <= 0)
-                return pool[Random.Next(pool.Length)];
+                weights[i] = Math.Max(weight, 0.00001);
+                totalWeight += weights[i];
+            }
 
             double roll = Random.NextDouble() * totalWeight;
 

@@ -176,32 +176,33 @@ namespace SynthesisRPGLoot.Analyzers
                     var numEnchants = rarity.NumEnchantments;
                     if (numEnchants <= 0) continue;
 
-                    // Use level-appropriate pool when possible
-                    var referenceLevel = AllEnchantments[coreEnchant].Level;
-                    var pool = ByLevelIndexed.TryGetValue(referenceLevel, out var p) 
-                        ? p 
-                        : AllEnchantments;
-
-                    var takeMin = Math.Min(numEnchants, pool.Length);
-                    if (takeMin <= 0) continue;
-
-                    var resolvedEnchantments = new ResolvedEnchantment[takeMin];
-
-                    // First enchantment = core (keeps original design)
-                    resolvedEnchantments[0] = AllEnchantments[coreEnchant];
-
-                    // Remaining enchantments = weighted random
-                    for (int k = 1; k < takeMin; k++)
+                    // Generate more combinations because filtering is now heavier
+                    for (int attempt = 0; attempt < 1500; attempt++)
                     {
-                        resolvedEnchantments[k] = PickWeightedEnchantment(pool, referenceLevel, rarity.HighLevelEnchantmentPenalty);
-                    }
+                        int referenceLevel = 8;   // Change this number if needed (lower = stricter early game)
 
-                    var newEnchantmentsForName = GetEnchantmentsStringForName(resolvedEnchantments);
-                    var enchants = AllRpgEnchants[i];
+                        var pool = ByLevelIndexed.TryGetValue(referenceLevel, out var p) 
+                            ? p 
+                            : AllEnchantments;
 
-                    if (!enchants.ContainsKey(rarity.Label + " " + newEnchantmentsForName))
-                    {
-                        enchants.Add(rarity.Label + " " + newEnchantmentsForName, resolvedEnchantments);
+                        var resolvedEnchantments = new ResolvedEnchantment[numEnchants];
+
+                        // ALL enchantments use weighting now
+                        for (int k = 0; k < numEnchants; k++)
+                        {
+                            resolvedEnchantments[k] = PickWeightedEnchantment(
+                                pool, 
+                                referenceLevel, 
+                                rarity.HighLevelEnchantmentPenalty);
+                        }
+
+                        var newEnchantmentsForName = GetEnchantmentsStringForName(resolvedEnchantments);
+                        var enchants = AllRpgEnchants[i];
+
+                        if (!enchants.ContainsKey(rarity.Label + " " + newEnchantmentsForName))
+                        {
+                            enchants.Add(rarity.Label + " " + newEnchantmentsForName, resolvedEnchantments);
+                        }
                     }
                 }
             }
