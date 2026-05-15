@@ -117,7 +117,8 @@ namespace SynthesisRPGLoot.Analyzers
             // FISH ADDED
             var OrderedEnchantments = AllEnchantments
             .OrderBy(x => x.Enchantment?.Name.ToString() ?? string.Empty)
-            .ThenBy(x => x.Enchantment.EnchantmentAmount)
+            //.ThenBy(x => x.Enchantment.EnchantmentAmount)
+            .ThenBy(x => x.Enchantment?.Effects.First().Data.Magnitude)
             .ToArray();
             foreach (var enchantment in OrderedEnchantments)
             {
