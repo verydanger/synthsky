@@ -10,6 +10,7 @@ using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Strings;
 using Mutagen.Bethesda.Synthesis;
+using Mutagen.Bethesda.Oblivion;
 //using Mutagen.Bethesda.Oblivion;
 
 namespace SynthesisRPGLoot.Analyzers
@@ -107,6 +108,7 @@ namespace SynthesisRPGLoot.Analyzers
                         Level = level,
                         Amount = enchantmentAmount,
                         Enchantment = ench
+
                     };
                 })
                 .Where(e => e != default)
@@ -120,6 +122,10 @@ namespace SynthesisRPGLoot.Analyzers
             foreach (var enchantment in OrderedEnchantments)
             {
                 Console.WriteLine(enchantment.Level + " " + enchantment.Enchantment.Name + " " + enchantment.Enchantment.EnchantmentAmount);
+                foreach (var effect in enchantment.Enchantment.Effects)
+                {
+                    Console.WriteLine("     " + effect.Data.Magnitude);
+                }
             }
 
             AllLevels = AllEnchantments.Select(e => e.Level).Distinct().ToHashSet();
