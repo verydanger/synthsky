@@ -10,6 +10,7 @@ using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Strings;
 using Mutagen.Bethesda.Synthesis;
+using Mutagen.Bethesda.Oblivion;
 
 namespace SynthesisRPGLoot.Analyzers
 {
@@ -111,6 +112,12 @@ namespace SynthesisRPGLoot.Analyzers
                 .Where(e => e != default)
                 .ToArray();
 
+            // FISH ADDED
+            foreach (var enchantment in AllEnchantments)
+            {
+                Console.WriteLine(enchantment.Level + " " + enchantment.Enchantment.Name + " " + enchantment.Amount + " " + enchantment.Enchantment.EnchantmentAmount);
+            }
+
             AllLevels = AllEnchantments.Select(e => e.Level).Distinct().ToHashSet();
 
             var maxLvl = AllListItems.Select(i => i.Entry.Data!.Level).Distinct().ToHashSet().Max();
@@ -207,9 +214,6 @@ namespace SynthesisRPGLoot.Analyzers
                 }
             }
         }
-
-
-        //HighLevelEnchantmentPenalty
 
         protected override FormKey EnchantItem(ResolvedListItem<IArmorGetter> item, int rarity)
         {
