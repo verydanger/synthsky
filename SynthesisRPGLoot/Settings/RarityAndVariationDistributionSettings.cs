@@ -107,11 +107,18 @@ public class RarityAndVariationDistributionSettings
 
         /// <summary>
         /// FISH ADDED
-        /// Higher = stronger penalty against high-level enchantments.
-        /// 0.0 = no penalty (original behavior)
-        /// 0.8 = recommended starting value
+        /// Controls how aggressively high-level enchantments are suppressed when generating
+        /// loot for lower level gear.
         /// </summary>
-        public float HighLevelEnchantmentPenalty { get; set; } = 0.8f;
+        [MaintainOrder]
+        [SynthesisSettingName("High Level Enchantment Penalty")]
+        [SynthesisDescription("Higher values make high-level enchantments much rarer on low-level gear.\n" +
+                            "Recommended range: 1.3 - 1.7")]
+        [SynthesisTooltip("0.0 = No penalty (original behavior)\n" +
+                        "1.0 = Moderate penalty\n" +
+                        "1.5 = Strong penalty (good starting point)\n" +
+                        "1.7+ = Very strong penalty")]
+        public float HighLevelEnchantmentPenalty { get; set; } = 1.5f;
 
         public int CompareTo(RarityClass other)
         {
