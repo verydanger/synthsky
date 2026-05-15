@@ -397,7 +397,10 @@ namespace SynthesisRPGLoot.Analyzers
 
             for (int i = 0; i < pool.Length; i++)
             {
+                
                 var ench = pool[i];
+                Console.WriteLine(ench.Enchantment.Name + " " + ench.Level + " " + ench.Enchantment.EnchantmentAmount);
+                
                 double weight = 1.0;
 
                 int levelDiff = ench.Level - referenceLevel;
